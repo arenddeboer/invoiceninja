@@ -54,6 +54,13 @@ class ClientApiController extends BaseAPIController
             });
         }
         
+        // Filter by is_deleted
+        if ($is_deleted = Input::get('is_deleted')) {
+            $clients = $clients->whereHas('contacts', function ($query) use ($is_deleted) {
+                $query->where('is_deleted', $is_deleted);
+            });
+        }
+        
         return $this->listResponse($clients);
     }
 
