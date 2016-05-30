@@ -61,6 +61,14 @@ class ClientApiController extends BaseAPIController
             });
         }
         
+        // Filter by id_number
+        if ($id_number = Input::get('id_number')) {
+            $clients = $clients->whereHas('contacts', function ($query) use ($id_number) {
+                $query->where('id_number', $id_number);
+            });
+        }
+    
+        
         return $this->listResponse($clients);
     }
 
